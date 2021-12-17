@@ -107,7 +107,7 @@ void AFN::obtenerFinal(){
             getline(file,linea);
             if(i == 1){
                 std::regex_search(linea, expresionMatch, expresion);
-                this -> finales = 
+                this -> finales = //uso de array
             }
         }
     }catch(const std::exception& e){
