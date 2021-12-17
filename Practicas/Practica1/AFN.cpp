@@ -6,21 +6,35 @@
 #include "AFN.h"
 #include "Transicion.h"
 using namespace std;
+fstream file;
 
 AFN::AFN(){
 
 }
 
 void AFN::carga(string nombre){
-    ofstream file; //Puede que sirva :L
+    //ofstream file; //Puede que sirva :L
     file.open(nombre, ios::out);  //Cargamos l archivo, si no existe se crea un archivo
+    if(file.fail()){
+        std::cout << "No se pudo abrir el archivo\n";
+        exit(1);
+    }
+    file.close();
 }
 
-void AFN::cargaTransiciones(){
+void AFN::cargaTransiciones(string nombre){
     try{
         string linea;   //Almacenamos la cadena que se escribe en el archivo
         int inicio, fin;
         const char *c;
+
+        file.open(nombre.c_str());
+        if(file.fail()){
+            std::cout << "No se pudo abrir el archivo\n";
+            exit(1);
+        }
+        //linea = file.getline();
+        getline(file, linea);
         std::regex expresion("(\\d+)->(\\d+),([a-zE])");    //Declaramos expresion
         std::cmatch expresionMatch;
         while(!(linea.empty())){
@@ -31,7 +45,8 @@ void AFN::cargaTransiciones(){
                 addTransicion(inicio, fin, c);  //Agremos una transicion al archivo
             }
         }
-    }catch(exception e){
+        file.close();
+    }catch(const std::exception& e){
 
     }
 }
@@ -53,5 +68,10 @@ void AFN::rmTransicion(int inicio, int fin, const char *simbolo){
 }
 
 void AFN::obtenerInicial(){
-    
+    try{
+        /* code */
+    }catch(const std::exception& e){
+
+    }
+       
 }
