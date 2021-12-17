@@ -1,12 +1,13 @@
 #include <iostream>
+#include <cstring>
 #include "Transicion.h"
 using namespace std;
 
 //Constructor, segun yo cuenta como seter tambien :L
-Transicion::Transicion(int inicio, int fin, char simbolo){
-    inicio = 0;
-    fin = 0;
-    simbolo = 'E';//Transicion epsilon
+Transicion::Transicion(int ini, int fin, char sim){
+    this -> inicio = ini;
+    this -> final = fin;
+    this -> simbolo = sim;//Transicion epsilon
 }
 
 int Transicion::getInicio(){
@@ -14,7 +15,7 @@ int Transicion::getInicio(){
 }
 
 int Transicion::getFin(){
-    return fin;
+    return final;
 }
 
 char Transicion::getSimbolo(){
@@ -25,7 +26,7 @@ bool Transicion::equals(Transicion tr){
     int in = tr.getInicio();
     int fn = tr.getFin();
     char c = tr.getSimbolo();
-    if( (inicio == in) && (fin == fn) && (simbolo == c) ){
+    if( (inicio == in) && (final == fn) && (simbolo == c) ){
         return true;
     }else{
         return false;

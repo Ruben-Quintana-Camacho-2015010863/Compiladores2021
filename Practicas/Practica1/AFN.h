@@ -13,7 +13,10 @@ class AFN{
         //ofstream file;
     public:
         AFN();
-        void carga();   //archivo
+        void carga(string nom);   //archivo
         void cargaTransiciones();
+        void addTransicion(int ini, int fin, const char *sim);
+        void rmTransicion(int ini, int fin, const char *sim);    //Eliminar una transicion
+        void obtenerInicial();
         
 };

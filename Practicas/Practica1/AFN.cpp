@@ -4,6 +4,7 @@
 #include <vector>   //Libreria para hacer uso de algo parecido a un ArrayList
 #include <regex>
 #include "AFN.h"
+#include "Transicion.h"
 using namespace std;
 
 AFN::AFN(){
@@ -36,5 +37,21 @@ void AFN::cargaTransiciones(){
 }
 
 void AFN::addTransicion(int inicio, int fin, const char *simbolo){
-    //Transicion transicion = new Transicion(inicio, fin, simbolo);   //new??
+    //Transicion *transicion = new Transicion(inicio, fin, simbolo);   //new??
+    Transicion transicion(inicio, fin, *simbolo);
+    transiciones.push_back(transicion);
+}
+
+void AFN::rmTransicion(int inicio, int fin, const char *simbolo){
+    Transicion trans(inicio, fin, *simbolo);
+    for(Transicion transicion : this -> transiciones){
+        if(transicion.equals(trans)){
+            //transiciones.pop_back(transicion);
+            transiciones.erase(transicion);
+        }
+    }
+}
+
+void AFN::obtenerInicial(){
+    
 }
