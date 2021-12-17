@@ -18,5 +18,5 @@ class AFN{
         void addTransicion(int ini, int fin, const char *sim);
         void rmTransicion(int ini, int fin, const char *sim);    //Eliminar una transicion
         void obtenerInicial();
-        
+        void obtenerFinal();
 };

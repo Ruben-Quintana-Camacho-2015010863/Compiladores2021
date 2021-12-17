@@ -69,9 +69,49 @@ void AFN::rmTransicion(int inicio, int fin, const char *simbolo){
 
 void AFN::obtenerInicial(){
     try{
-        /* code */
+        string linea;
+
+        file.open(nombre.c_str());
+        if(file.fail()){
+            std::cout << "No se pudo abrir el archivo\n";
+            exit(1);
+        }
+        //linea = file.getline();
+        getline(file, linea);
+        std::regex expresion("([a-zA-z]+)(\\d+)");
+        std::cmatch expresionMatch;
+        std::regex_search(linea, expresionMatch, expresion);
+        this -> incial = stoi(expresionMatch[2]);
+        file.close();
     }catch(const std::exception& e){
 
     }
-       
+}
+
+void AFN::obtenerFinal(){
+    try{
+        string linea;
+        int indice = 0;
+        string aux[20];
+        int nums[20];
+
+        file.open(nombre.c_str());
+        if(file.fail()){
+            std::cout << "No se pudo abrir el archivo\n";
+            exit(1);
+        }
+        //getline(file, linea);
+        std::regex expresion("([a-zA-z]+):(.\\s*\\d+)+)");
+        std::cmatch expresionMatch;
+        for(int i = 0; i <= 1; i++){
+            getline(file,linea);
+            if(i == 1){
+                std::regex_search(linea, expresionMatch, expresion);
+                this -> finales = 
+            }
+        }
+    }catch(const std::exception& e){
+        std::cerr << e.what() << '\n';
+    }
+    
 }
