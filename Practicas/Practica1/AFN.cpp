@@ -5,6 +5,9 @@
 #include <regex>
 #include "AFN.h"
 #include "Transicion.h"
+#include <functional>
+//#include <boost/range/numeric.hpp>  // (Opcion 1)Cabecera para boost::accumulate que da un mejor manejo en los datos de un vector o arreglo
+#include <numeric>  //Opcion numero 2
 using namespace std;
 fstream file;
 
@@ -67,7 +70,7 @@ void AFN::rmTransicion(int inicio, int fin, const char *simbolo){
     }
 }
 
-void AFN::obtenerInicial(){
+void AFN::obtenerInicial(string nombre){
     try{
         string linea;
 
@@ -88,7 +91,7 @@ void AFN::obtenerInicial(){
     }
 }
 
-void AFN::obtenerFinal(){
+void AFN::obtenerFinal(string nombre){
     try{
         string linea;
         int indice = 0;
@@ -105,13 +108,42 @@ void AFN::obtenerFinal(){
         std::cmatch expresionMatch;
         for(int i = 0; i <= 1; i++){
             getline(file,linea);
-            if(i == 1){
+            if(i == 1){ //Arreglo de funciones para simular el proceso en Java.
                 std::regex_search(linea, expresionMatch, expresion);
-                this -> finales = //uso de array
+                this -> finales = std::accumulate(begin(expresionMatch), end(expresionMatch),2, [](const AFN &c){
+                    return expresionMatch[2];
+                });
             }
         }
+        file.close();
     }catch(const std::exception& e){
         std::cerr << e.what() << '\n';
+    }   
+}
+
+void AFN::establecerFinal(int estado){
+    int aux[10];
+    for(int i = 0; i <= sizeof(finales+1); i++){
+        aux[i] = finales[i];
     }
-    
+    aux[sizeof(aux)-1]= estado;
+    this->finales = aux;
+}
+
+bool AFN::esAFN(){
+    for(Transicion transicion : this->transiciones){
+        if(transicion.getSimbolo() == 'E'){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool AFN::esAFD(){
+    for(Transicion transicion : this->transiciones){
+        if(transicion.getSimbolo() == 'E'){
+            return false;
+        }
+    }
+    return true;
 }

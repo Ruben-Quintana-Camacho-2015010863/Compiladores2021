@@ -14,9 +14,12 @@ class AFN{
     public:
         AFN();
         void carga(string nom);   //archivo
-        void cargaTransiciones();
+        void cargaTransiciones(string nom);
         void addTransicion(int ini, int fin, const char *sim);
         void rmTransicion(int ini, int fin, const char *sim);    //Eliminar una transicion
-        void obtenerInicial();
-        void obtenerFinal();
+        void obtenerInicial(string nom);
+        void obtenerFinal(string nom);
+        void establecerFinal(int estado);
+        bool esAFN(); //Metodo de evaluacion
+        bool esAFD(); //Metodo de evaluacion
 };
