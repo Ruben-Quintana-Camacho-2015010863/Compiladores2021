@@ -66,3 +66,7 @@ void AFD::rmTransicion(int inicio, int fin, const char *simbolo){
         indice++;
     }
 }
+
+void AFD::obtenerInicial(string nombre){
+
+}
