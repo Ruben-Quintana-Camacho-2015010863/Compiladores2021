@@ -14,5 +14,8 @@ class AFD{
     public:
         AFD();
         void carga(string nombre);
-        
+        void cargaTransiciones(string nombre);
+        void addTransicion(int inicio, int fin, const char *simbolo);
+        void obtenerInicial(string nombre);
+        void rmTransicion(int inicio, int fin, const char *simbolo); //Segun mi logica, hasta ahora solo debo hacer manejo de un indice
 };
