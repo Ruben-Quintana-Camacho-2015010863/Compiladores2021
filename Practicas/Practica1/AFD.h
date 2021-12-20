@@ -18,4 +18,8 @@ class AFD{
         void addTransicion(int inicio, int fin, const char *simbolo);
         void obtenerInicial(string nombre);
         void rmTransicion(int inicio, int fin, const char *simbolo); //Segun mi logica, hasta ahora solo debo hacer manejo de un indice
+        void obtenerFinal(string nombre);
+        void establecerFinal(int estado);
+        bool esAFN();
+        bool esAFD();
 };
