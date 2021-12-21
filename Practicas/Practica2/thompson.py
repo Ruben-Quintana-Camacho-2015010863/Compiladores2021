@@ -45,16 +45,26 @@ class Thompson:
             if len(item) == 1:
                 nuevaLista = [] #Otra lista como aux XD
                 # Agregamos las tranciciones que ocurren de un estado a otro, imprimiendo el trazado
-                nuevaLista.append("Estado" + str(cont1) + "-> Estado" + str(cont2) + ",E")
-                nuevaLista.append("Estado" + str(cont1) + "-> Estado" + str(cont2+2) + ",E")
-                nuevaLista.append("Estado" + str(cont1+1) + "-> Estado" + str(cont2+1) + "," + item)
-                nuevaLista.append("Estado" + str(cont1+2) + "-> Estado" + str(cont2) + ",E")
-                nuevaLista.append("Estado" + str(cont1+2) + "-> Estado" + str(cont2+2) + ",E")
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + " ,E")
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2+2) + " ,E")
+                nuevaLista.append("Estado" + str(cont1+1) + " -> Estado" + str(cont2+1) + " ," + item)
+                nuevaLista.append("Estado" + str(cont1+2) + " -> Estado" + str(cont2) + " ,E")
+                nuevaLista.append("Estado" + str(cont1+2) + " -> Estado" + str(cont2+2) + " ,E")
                 automatas.append(nuevaLista)
             if len(item) > 1:
                 nuevaLista = []
                 item = item.replace("(", "")
-                item = item.replace("(", "")
+                item = item.replace(")", "")
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + " ,E")
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2 + 1 + len(item)) + " ,E")
+                n = 1
+                for letra in item:
+                    nuevaLista.append("Estado" + str(cont1 + n) +  " -> Estado" + str(cont2 + n) + " ," + letra)
+                    n = n + 1
+                nuevaLista.append("Estado" + str(cont1 + 1 + len(item)) + " -> Estado" + str(cont2) + " ,E")
+                nuevaLista.append("Estado" + str(cont1 + 1 + len(item)) + " -> Estado" + str(cont2 + 1 + len(item)) + " ,E")
+                automatas.append(nuevaLista)
+        return automatas
 
 automata = Thompson()
-automata.convertir("a")
+automata.convertir("a*")
