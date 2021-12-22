@@ -24,6 +24,7 @@ class Thompson:
         #Por ultimo validamos cadena
         automataFinal.append(self.cerraduraEstrella(cadena)) #Evaluamos la cerradura *
         automataFinal.append(self.cerraduraPositiva(cadena)) #Evaluamos la cerradura +
+        print(automataFinal)    #Por ultimo mandamos a imprimir las tranciciones de las plantillas, por lo que finaliza el programa
 
     def cerraduraEstrella(self, cadena):
         automata = []
@@ -46,24 +47,24 @@ class Thompson:
             if len(item) == 1:
                 nuevaLista = [] #Otra lista como aux XD
                 # Agregamos las tranciciones que ocurren de un estado a otro, imprimiendo el trazado
-                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + " ,E")
-                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2+2) + " ,E")
-                nuevaLista.append("Estado" + str(cont1+1) + " -> Estado" + str(cont2+1) + " ," + item)
-                nuevaLista.append("Estado" + str(cont1+2) + " -> Estado" + str(cont2) + " ,E")
-                nuevaLista.append("Estado" + str(cont1+2) + " -> Estado" + str(cont2+2) + " ,E")
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + ",E")
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2+2) + ",E")
+                nuevaLista.append("Estado" + str(cont1+1) + " -> Estado" + str(cont2+1) + "," + item)
+                nuevaLista.append("Estado" + str(cont1+2) + " -> Estado" + str(cont2) + ",E")
+                nuevaLista.append("Estado" + str(cont1+2) + " -> Estado" + str(cont2+2) + ",E")
                 automatas.append(nuevaLista)
             if len(item) > 1:
                 nuevaLista = []
                 item = item.replace("(", "")
                 item = item.replace(")", "")
-                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + " ,E")
-                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2 + 1 + len(item)) + " ,E")
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + ",E")
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2 + 1 + len(item)) + ",E")
                 n = 1
                 for letra in item:
-                    nuevaLista.append("Estado" + str(cont1 + n) +  " -> Estado" + str(cont2 + n) + " ," + letra)
+                    nuevaLista.append("Estado" + str(cont1 + n) +  " -> Estado" + str(cont2 + n) + "," + letra)
                     n = n + 1
-                nuevaLista.append("Estado" + str(cont1 + 1 + len(item)) + " -> Estado" + str(cont2) + " ,E")
-                nuevaLista.append("Estado" + str(cont1 + 1 + len(item)) + " -> Estado" + str(cont2 + 1 + len(item)) + " ,E")
+                nuevaLista.append("Estado" + str(cont1 + 1 + len(item)) + " -> Estado" + str(cont2) + ",E")
+                nuevaLista.append("Estado" + str(cont1 + 1 + len(item)) + " -> Estado" + str(cont2 + 1 + len(item)) + ",E")
                 automatas.append(nuevaLista)
         return automatas
 
@@ -87,11 +88,33 @@ class Thompson:
             cont2 = 2
             if len(item) == 1:
                 nuevaLista = []     #Otra lista como aux para este bloque xd
-                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + " ," + item)
-                nuevaLista.append("Estado" + str(cont1 + 1) + " -> Estado" + str(cont2 + 1) + " ,E")
-                nuevaLista.append("Estado" + str(cont1 + 1) + " -> Estado" + str(cont2 + 3) + " ,E")
-
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + "," + item)
+                nuevaLista.append("Estado" + str(cont1 + 1) + " -> Estado" + str(cont2 + 1) + ",E")
+                nuevaLista.append("Estado" + str(cont1 + 1) + " -> Estado" + str(cont2 + 3) + ",E")
+                nuevaLista.append("Estado" + str(cont1 + 2) + " -> Estado" + str(cont2 + 2) + "," + item)
+                nuevaLista.append("Estado" + str(cont1 + 3) + " -> Estado" + str(cont2 + 1) + ",E")
+                nuevaLista.append("Estado" + str(cont1 + 3) + " -> Estado" + str(cont2 + 1) + ",E")
+                automatas.append(nuevaLista)
+            if len(item) > 1:
+                nuevaLista = []
+                item = item.replace("(", "")
+                item = item.replace(")", "")
+                n = 1
+                cont1 = 1 + len(item)
+                cont2 = 2 + len(item)
+                for letra in item:
+                    nuevaLista.append("Estado" + str(n) + " -> Estado" + str(n + 1) + "," + letra)
+                    n = n +1
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + ",E")
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2 + 1 + len(item)) + ",E")
+                for letra in item:
+                    nuevaLista.append("Estado" + str(n + 1) + " -> Estado" + str(n + 2) + "," + item)
+                    n = n + 1
+                nuevaLista.append("Estado" + str(cont1 + len(item) + 1) + " -> Estado" + str(cont2 + len(item) + 1) + ",E")
+                nuevaLista.append("Estado" + str(cont1 + len(item) + 1) + " -> Estado" + str(cont2 + len(item) - 4) + ",E")
+                automatas.append(nuevaLista)
+        return automatas
 
 
 automata = Thompson()
-automata.convertir("a+b*")
+automata.convertir("a+b+c*")
