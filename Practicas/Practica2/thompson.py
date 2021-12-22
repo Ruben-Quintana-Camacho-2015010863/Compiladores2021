@@ -22,21 +22,22 @@ class Thompson:
             print("Cadena invalida, ingresa otra cadena")
         
         #Por ultimo validamos cadena
-        automataFinal.append(self.obtenerCerraduraEstrella(cadena))#Evaluamos la cerradura *
+        automataFinal.append(self.cerraduraEstrella(cadena)) #Evaluamos la cerradura *
+        automataFinal.append(self.cerraduraPositiva(cadena)) #Evaluamos la cerradura +
 
-    def obtenerCerraduraEstrella(self, cadena):
+    def cerraduraEstrella(self, cadena):
         automata = []
         expresionNormal = []
         expresionParentesis = []
         listaCompleta = []
-        expresionNormal = re.findall("\w\*", cadena)
+        expresionNormal = re.findall("\w\*", cadena)    #Hacemos match con *
         expresionParentesis = re.findall("\(\w+\)\*", cadena)
         listaCompleta = listaCompleta + expresionNormal
         listaCompleta = listaCompleta + expresionParentesis
         automata.append(self.plantillaEstrella(listaCompleta))
         return automata
 
-    def plantillaEstrella(self, Lista):
+    def plantillaEstrella(self, Lista): #Plantilla porque es el formato 
         automatas = []
         for item in Lista:
             item = item.replace("*", "")
@@ -66,5 +67,31 @@ class Thompson:
                 automatas.append(nuevaLista)
         return automatas
 
+    def cerraduraPositiva(self, cadena):
+        automata = []
+        listaCompleta = []
+        expresionNormal = []
+        expresionParentesis = []
+        expresionNormal = re.findall("\w\+", cadena)    #Hacemos match con +
+        expresionParentesis = re.findall("\(\w+\)\+", cadena)
+        listaCompleta = listaCompleta + expresionNormal
+        listaCompleta = listaCompleta + expresionParentesis
+        automata.append(self.plantillaPositiva(listaCompleta))
+        return automata
+
+    def plantillaPositiva(self, Lista):
+        automatas = []
+        for item in Lista:
+            item = item.replace("+", "")
+            cont1 = 1
+            cont2 = 2
+            if len(item) == 1:
+                nuevaLista = []     #Otra lista como aux para este bloque xd
+                nuevaLista.append("Estado" + str(cont1) + " -> Estado" + str(cont2) + " ," + item)
+                nuevaLista.append("Estado" + str(cont1 + 1) + " -> Estado" + str(cont2 + 1) + " ,E")
+                nuevaLista.append("Estado" + str(cont1 + 1) + " -> Estado" + str(cont2 + 3) + " ,E")
+
+
+
 automata = Thompson()
-automata.convertir("a*")
+automata.convertir("a+b*")
