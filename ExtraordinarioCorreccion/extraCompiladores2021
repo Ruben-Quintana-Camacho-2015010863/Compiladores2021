@@ -1,0 +1,27 @@
+Quintana Camacho Ruben Abiasaf
+3CV15 - Compiladores
+
+1. Es un programa capaz de traducir el lenguaje original de un archivo a un programa equivalente en un lenguaje distinto, normalmente a lenguaje maquina. Es decir, es un traductor de lenguajes formales.
+
+2.  Analizador Lexico
+    Analizador Sintactico
+    Anaizador Semantico
+    Generador de codigo intermedio
+    Optimizador de codigo
+    Generador de codigo
+    Optimizador de codigo
+    *Tabla de simbolos
+
+3. Obtiene una cadena de tokens que el analizador lexico genera, y verifica que la cadena de tokens pueda generarse mediante la gramatica dada. Despues el analizador sintactico construye (no literalmente) un arbol de analisis sintactico.
+
+4. ^[-+]\d*\.?\d*$
+
+    [-+] = aceptar numeros pos o neg
+    \d = digito del 0-9
+    ? = antes de este signo tiene que aparer cero o una vez
+    * =se acepta una o varias veces
+    \. = punto
+    ^ = se tiene que cumplr al inicio de la cadena
+    $ = se cumple al final de la cadena
+
+5.
