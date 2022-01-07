@@ -17,10 +17,10 @@ class AFN(object):
 
     def obtenerAlfabeto(self):
         simbolos = []
-        for linea in self.linea.splitlines():
+        for line in self.linea.splitlines():
             simbolo = ""
-            if re.match(r"(\d+)->(\d+),([a-zE])", linea):   #intentamos hacer match
-                res = re.match(r"(\d+)->(\d+), ([a-zE])", linea)
+            if re.match(r"(\d+)->(\d+),([a-zE])", line):   #intentamos hacer match
+                res = re.match(r"(\d+)->(\d+), ([a-zE])", line)
                 simbolo = res.group(3)
                 simbolos.append(simbolo)
         simbolos = list(dict.fromkeys(simbolos))
@@ -47,7 +47,7 @@ class AFN(object):
         for line in self.linea.splitlines():
             inicio = 0
             fin = 0
-            simbolo = 0
+            simbolo = ""
             if re.match(r"(\d+)->(\d+),([a-zE])", line):
                 res = re.match(r"(\d+)->(\d+),([a-ZE])", line)
                 inicio = int(res.group(1))
@@ -99,3 +99,20 @@ class AFN(object):
             if transicion.obtenerAtributos()[2] == 'E':
                 return False
         return True
+
+'''
+Pruebas 
+
+if __name__ == "__main__":
+    autn = AFN()
+    autn.cargar("afn.afn")
+    autn.cargaTransiciones()
+    autn.addTransicion(2,3,'E')
+    autn.rmTransicion(11,11,'b')
+    autn.obtenerInicial()
+    autn.obtenerFinal()
+    autn.establecerInicial(4)
+    autn.establecerFinal(8)
+    autn.guardar("afn2")
+    
+'''

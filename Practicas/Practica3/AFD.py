@@ -36,7 +36,7 @@ class AFD(object):
                 res = re.match(r"(\d+)->(\d+),([a-zE])", line)
                 simbolo = res.group(3)
                 simbolos.append(simbolo)
-        simbolos = list(dict.fromkeys(simbolos)) #{}
+        simbolos = list(dict.fromkeys(simbolos)) #{:}
         print(simbolos)
 
     def cargarTransiciones(self):
@@ -65,4 +65,49 @@ class AFD(object):
                 return
             indice = indice + 1
 
+    def obtenerInicial(self):
+        lineas = self.linea.splitlines()
+        ini_str = re.match(r"([a-zA-z]+):(\d+)",lineas[0])
+        self.inicial = ini_str.group(2)
+
+    def obtenerFinales(self):
+        lineas = self.linea.splitlines()
+        ini_str = re.match(r"([a-zA-z]+):(\s*\d+)+", lineas[1])
+        finales = ini_str.group(2).split(" ")
+        for final in finales:
+            self.finales.append(final)
+
+    def establecerInicial(self, inicial):
+        self.inicial = inicial
     
+    def establecerFinal(self, final):
+        self.finales.append(final)
+    
+    def esAFN(self):
+        for transicion in self.transiciones:
+            if transicion.obtenerAtributos()[2] == 'E':
+                return True
+        return False
+
+    def esAFD(self):
+        for transicion in self.transiciones:
+            if transicion.obtenerAtributos()[2] == 'E':
+                return False
+        return True
+
+'''
+Pruebas
+
+if __name__ == "__main__":
+    autd = AFD()
+    autd.cargar("afn.afn")
+    autd.cargaTransiciones()
+    autd.addTransicion(2,3,'E')
+    autd.rmTransicion(11,11,'b')
+    autd.obtenerInicial()
+    autd.obtenerFinal()
+    autd.establecerInicial(4)
+    autd.establecerFinal(8)
+    autd.guardar("afn2")
+
+'''

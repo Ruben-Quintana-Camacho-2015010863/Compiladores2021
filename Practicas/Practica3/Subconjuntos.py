@@ -1,5 +1,7 @@
-from re import U
-import AFN,Transiciones
+from re import U    #matcheo con unicode
+import AFN
+import Transiciones
+import AFD
 
 class Subconjuntos(object):
     def __init__(self, afn):
@@ -50,8 +52,14 @@ class Subconjuntos(object):
                         self.Destados[str(chr(etiqueta))] = U
                         self.Destados[str(chr(etiqueta))].append(True)
                         #necesito declarar el afd
+                        self.afd.addTransicion(chr(etiqueta-1), chr(etiqueta), simbolo)
 
-
+        for key, val in self.Destados.items():
+            if self.afn.inicial in val[:-1]:
+                self.afd.establecerInicial(key)
+            for item in self.afn.finales:
+                if item in val[:-1]:
+                    self.afd.establecerFinal(key)
     
     def analizarMarcados(self):
         marcados = True
@@ -60,15 +68,21 @@ class Subconjuntos(object):
                 marcados = False
         return marcados
 
-
-        
+    def obtenerAFD(self):
+        return self.afd
 
 if __name__ == "__main__":
     autn = AFN.AFN()
-    autn.carga("..\\afn.afn")
+    autn.carga("afn.afn")
     autn.cargaTransiciones()
     autn.obtenerInicial()
     autn.obtenerFinal()
     autn.obtenerAlfabeto()
+    subconjuntos = Subconjuntos(autn)   #Realizamos el algoritmo dado un AFN
+    subconjuntos.construirSubconjunto()
+    autd = AFD.AFD()
+    autd = subconjuntos.obtenerAFD()
+    autd.guardar("afd")
+
 
     #Ahora solo falta definir el algoritmo, con ayuda de stackoverflow xd
